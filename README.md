@@ -83,6 +83,15 @@ The key stays in this tab's `sessionStorage`. Requests go from your browser stra
 
 The **What is real** tab shows the system prompt and the JSON schema every card must fit. A refusal, a cut-off answer or invalid JSON becomes a plain-English error, never an invented card.
 
+## How it would work for real
+
+Not built, by design: the demo stops at the edge of the real world. The plan for each pipe, in plain words.
+
+- **Money.** A marketplace payment provider (Stripe Connect is the standard one) takes the pitcher's card payment, holds it, and on the listener's confirmation pays out the four shares to four accounts: the listener, the two inboxes, and SpamDeck. Credits stay an internal ledger and never cash out. Needs a small server for the provider's keys and its confirmation callbacks, and onboarding for anyone who gets paid.
+- **Email in.** Read-only access to the inbox owner's junk folder (and any folder they choose) through the provider's own sign-in (Gmail or Outlook), so SpamDeck never holds a mailbox password. The Dealer reads, bins the real junk, and deals the pitches.
+- **Email out.** SpamDeck writes from its own address, never from the inbox owner's. Invitations and introductions go out under SpamDeck's name, and replies come back to SpamDeck. The owner's mail provider is never taught that the spam was welcome, and the owner's inbox is never touched.
+- **Consent record.** Every invitation, join, decline, offer and payment is already a dated ledger entry in the engine; for real it is stored server-side and exportable, which is what the legal review will ask for first.
+
 ## Run the tests
 
 ```
