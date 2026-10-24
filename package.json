@@ -1,0 +1,11 @@
+{
+  "name": "spamdeck",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Charge spammers to pitch each other.",
+  "scripts": {
+    "test": "node --test",
+    "start": "python3 -m http.server 8791 --bind 127.0.0.1"
+  },
+  "license": "MIT"
+}

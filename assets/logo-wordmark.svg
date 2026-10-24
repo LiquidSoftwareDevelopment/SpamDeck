@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 981 256" width="981" height="256" role="img" aria-labelledby="title">
+  <title id="title">SpamDeck</title>
+  <g transform="translate(-5.48 0)">
+    <g transform="translate(95 111.32) rotate(-14)">
+      <rect x="-63.13" y="-87.57" width="126.27" height="175.15" rx="17.31" fill="#fffdf8" stroke="#1c1a16" stroke-width="5.5"/>
+      <text x="-19.35" y="-12.73" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="69.24" font-weight="700" fill="#1c1a16">@</text>
+    </g>
+    <g transform="translate(167.3 147.98) rotate(8)">
+      <rect x="-63.13" y="-87.57" width="126.27" height="175.15" rx="17.31" fill="#1f6b47" stroke="#1c1a16" stroke-width="5.5"/>
+      <rect x="-52.95" y="-77.39" width="105.9" height="154.78" rx="11.2" fill="none" stroke="#b9931f" stroke-width="2.29"/>
+      <text x="0" y="34.93" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="109.98" font-weight="700" fill="#fffdf8">$</text>
+    </g>
+  </g>
+  <text class="word" x="260.15" y="179.97" font-family="Georgia, 'Times New Roman', serif" font-size="150" font-weight="400" fill="#1c1a16" textLength="710.89" lengthAdjust="spacingAndGlyphs">SpamDeck</text>
+</svg>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpamDeck</title>
+<meta name="description" content="Charge spammers to pitch each other. A consent-first marketplace built from the sales pitches you never wanted.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='6' y='8' width='22' height='30' rx='4' fill='%23fffdf8' stroke='%231c1a16' stroke-width='2' transform='rotate(-12 24 24)'/%3E%3Crect x='20' y='10' width='22' height='30' rx='4' fill='%231f6b47' stroke='%231c1a16' stroke-width='2' transform='rotate(8 24 24)'/%3E%3Ctext x='31' y='31' text-anchor='middle' font-size='16' font-weight='700' fill='%23fff' font-family='Georgia,serif' transform='rotate(8 24 24)'%3E$%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#inbox" id="brand">
+    <svg class="brand-mark" viewBox="0 0 48 48" width="34" height="34" aria-hidden="true">
+      <g transform="rotate(-12 24 24)"><rect x="6" y="8" width="22" height="30" rx="4" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><text x="17" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)" font-family="Georgia,serif">@</text></g>
+      <g transform="rotate(8 24 24)"><rect x="20" y="10" width="22" height="30" rx="4" fill="var(--felt)" stroke="var(--ink)" stroke-width="2"/><text x="31" y="31" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="Georgia,serif">$</text></g>
+    </svg>
+    <span class="brand-text"><span class="brand-name">SpamDeck</span><span class="brand-tag">Charge spammers to pitch each other.</span></span>
+  </a>
+  <div class="top-right">
+    <label class="actor">Playing as <select id="actor" aria-label="Which side you are playing"></select></label>
+    <button id="btn-claude" class="chip" type="button" title="">Live AI: off</button>
+    <button id="btn-story" class="btn primary" type="button">Play the story</button>
+    <button id="btn-reset" class="btn ghost" type="button">Reset</button>
+  </div>
+</header>
+<nav class="tabs" id="tabs" aria-label="Sections"></nav>
+<div class="stats" id="stats"></div>
+<main id="view" class="view"></main>
+<div class="dealer" id="dealer"></div>
+<div id="modal-root"></div>
+<footer class="foot">
+  <span>SpamDeck is a demo. Every company in the deck is fictional, every payment is simulated, nothing is sent.</span>
+  <span><a href="#reality">What is real</a> · <a href="https://github.com/" id="repo-link" rel="noopener">Source</a></span>
+</footer>
+
+<script src="js/engine/taxonomy.js"></script>
+<script src="js/engine/match.js"></script>
+<script src="js/engine/market.js"></script>
+<script src="js/engine/extract.js"></script>
+<script src="js/data/demo_inbox.js"></script>
+<script src="js/data/demo_cards.js"></script>
+<script src="js/app/dom.js"></script>
+<script src="js/app/store.js"></script>
+<script src="js/app/claude.js"></script>
+<script src="js/app/views.js"></script>
+<script src="js/app/tour.js"></script>
+<script src="js/app/main.js"></script>
+</body>
+</html>
