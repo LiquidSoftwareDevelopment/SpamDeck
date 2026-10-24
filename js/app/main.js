@@ -60,10 +60,28 @@
     var el = D.clear(document.getElementById('view'));
     if (!st.app.welcomed && st.app.tab === 'inbox') el.appendChild(V.welcome(st));
     var fn = V[st.app.tab] || V.inbox;
+    if (st.app.storyStep != null) el.appendChild(storyPanel(st));   // the story explains itself at the top, not only in the bar
     el.appendChild(fn(st));
     if (D.linkLabels) D.linkLabels(el);
   }
 
+
+  // A loud 1995 dialog box at the top of the page while the story runs: what step this is, what is happening, what to press.
+  function storyPanel(st) {
+    var i = st.app.storyStep, step = S.tour.STEPS[i], n = S.tour.STEPS.length;
+    var hint = i === 0 ? 'Press NEXT to watch the Dealer work. Each step says what just happened and why it matters.'
+      : (i === 5 ? 'You are playing a company now: fill in the form and press Join, or press NEXT and the Dealer does it.'
+      : (i === 7 ? 'Press the fake Pay button in the checkout, or press NEXT and the Dealer pays.'
+      : (i >= n - 1 ? 'That is the whole loop. Press FINISH, then paste a pitch of your own.' : 'Press NEXT for the next step.')));
+    return h('div', { class: 'story-panel', role: 'status' },
+      h('div', { class: 'story-panel-head' }, 'THE STORY \u2014 STEP ' + (i + 1) + ' OF ' + n + ': ' + step.title.toUpperCase()),
+      h('div', { class: 'story-panel-line' }, S.tour.line(i)),
+      h('div', { class: 'story-panel-hint' }, hint),
+      h('div', { class: 'story-panel-controls' },
+        h('button', { class: 'btn', disabled: i === 0, onclick: S.tour.back }, '< Back'),
+        h('button', { class: 'btn primary', onclick: S.tour.next }, i >= n - 1 ? 'Finish' : 'Next >'),
+        h('button', { class: 'btn ghost', onclick: S.tour.exit }, 'Exit the story')));
+  }
   function renderDealer(st) {
     var el = D.clear(document.getElementById('dealer'));
     var i = st.app.storyStep;
