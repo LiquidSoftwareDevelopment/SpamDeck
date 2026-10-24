@@ -29,10 +29,27 @@
     var parts = String(name || '?').replace(/[^A-Za-z0-9 &]/g, '').split(/\s+/).filter(function (p) { return p && p !== '&'; });
     return (parts.length > 1 ? parts[0][0] + parts[1][0] : (parts[0] || '?').slice(0, 2)).toUpperCase();
   }
-  // Initials on a colour disc. Decorative: the name is always printed beside it, so screen readers skip it.
-  // Lightness 33% keeps white initials at 4.5:1 or better on every hue (40% fell to 3.3:1 on yellow-greens).
+  // One symbol from the page's own SVG sprite (index.html): the card (sd-card), the blank card (sd-blank), the starburst
+  // (sd-burst). Decorative unless opts.label is given, in which case it is an image with that name. opts.viewBox overrides.
+  var SVG_NS = 'http://www.w3.org/2000/svg', XLINK_NS = 'http://www.w3.org/1999/xlink';
+  function svgUse(symbolId, width, height, className, opts) {
+    opts = opts || {};
+    var svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', opts.viewBox || (symbolId === 'sd-burst' ? '0 0 100 100' : '0 0 14 20'));
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+    if (symbolId !== 'sd-burst') svg.setAttribute('shape-rendering', 'crispEdges');
+    if (opts.label) { svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', opts.label); } else svg.setAttribute('aria-hidden', 'true');
+    if (className) svg.setAttribute('class', className);
+    var use = document.createElementNS(SVG_NS, 'use');
+    use.setAttribute('href', '#' + symbolId);
+    use.setAttributeNS(XLINK_NS, 'xlink:href', '#' + symbolId);
+    svg.appendChild(use);
+    return svg;
+  }
+  // Initials on a blank playing card. Decorative: the name is always printed beside it, so screen readers skip it.
   function monogram(name) {
-    return h('span', { class: 'monogram', style: { background: 'hsl(' + hue(name) + ' 42% 33%)' }, 'aria-hidden': 'true' }, initials(name));
+    return h('span', { class: 'monogram', 'aria-hidden': 'true' }, svgUse('sd-blank', 21, 30), h('b', null, initials(name)));
   }
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function fmtDate(iso) {
@@ -59,5 +76,5 @@
     return scope;
   }
   root.SpamDeck = root.SpamDeck || {};
-  root.SpamDeck.dom = { h: h, clear: clear, hue: hue, initials: initials, monogram: monogram, fmtDate: fmtDate, fmtTime: fmtTime, plural: plural, linkLabels: linkLabels };
+  root.SpamDeck.dom = { h: h, clear: clear, hue: hue, initials: initials, monogram: monogram, svgUse: svgUse, fmtDate: fmtDate, fmtTime: fmtTime, plural: plural, linkLabels: linkLabels };
 })(window);

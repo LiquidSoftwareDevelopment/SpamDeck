@@ -17,10 +17,8 @@
   var READER_SHORT = { fixture: 'demo label', heuristic: 'simple reader', claude: 'live AI' };
   // The live reader also names its model on the card, so that fact is not only in a tooltip.
   function readerShort(c) { var k = readerKey(c); return (READER_SHORT[k] || c.readBy) + (k === 'claude' && c.readBy.split(':')[1] ? ' (' + c.readBy.split(':')[1] + ')' : ''); }
-  // Role chips on a card: "founders", "CTOs" (plain r + 's' gave "opss", "saless", "ceos").
-  var ROLE_CHIP = { founder: 'founders', ceo: 'CEOs', ops: 'ops', 'office manager': 'office managers', cfo: 'CFOs', finance: 'finance', cto: 'CTOs',
-    engineering: 'engineering', 'hiring manager': 'hiring managers', hr: 'HR', recruiting: 'recruiting', sales: 'sales', marketing: 'marketing', support: 'support' };
-  function roleChip(r) { return ROLE_CHIP[r] || r; }
+  // Role chips on a card: "founders", "CTOs", from the taxonomy's own plural table (plain r + 's' gave "opss").
+  function roleChip(r) { return (T.ROLE_PLURAL && T.ROLE_PLURAL[r]) || r; }
   // When you play one company, everyone else's buttons are off. Say so on the page, not only in tooltips.
   function actorNote(st) {
     var a = st.app.actor;
@@ -60,7 +58,7 @@
   // ---------------- welcome ----------------
   function welcome(st) {
     return h('section', { class: 'welcome' },
-      h('h2', null, 'Charge spammers to pitch each other.'),
+      h('div', { class: 'welcome-row' }, h('h2', null, 'Charge spammers to pitch each other.'), D.svgUse('sd-burst', 120, 120, 'burst', { label: 'They pay' })),
       h('p', { class: 'lead' }, 'A sales pitch you never wanted may contain a business connection someone else values. SpamDeck reads your unsolicited pitches, finds the companies that want to reach each other, and lets them pay for the introduction with everyone’s consent. You, the inbox, get a cut.'),
       h('div', { class: 'actions' },
         h('button', { class: 'btn primary', onclick: function () { A.welcomed(); S.tour.start(); } }, 'Play the story (2 minutes)'),
@@ -97,7 +95,7 @@
         h('div', { class: 'mail-group' }, h('span', null, ct.label), h('span', null, list.filter(function (e) { return !dealt[e.id]; }).length + ' to deal')),
         list.map(function (e) {
           var c = dealt[e.id] ? card(st, dealt[e.id]) : null;
-          var pill = st.app.reading[e.id] ? h('span', { class: 'reading-anim' }, h('i'), h('i'), h('i')) : (c ? (T.isBinned(c) ? h('span', { class: 'pill binned' }, 'binned') : statusPill(st, c.id)) : h('span', { class: 'pill unread' }, 'new'));
+          var pill = st.app.reading[e.id] ? h('span', { class: 'reading-anim' }, 'Reading...') : (c ? (T.isBinned(c) ? h('span', { class: 'pill binned' }, 'binned') : statusPill(st, c.id)) : h('span', { class: 'pill unread' }, 'new'));
           return h('button', { class: 'mail' + (e.id === selId ? ' active' : '') + (c && T.isBinned(c) ? ' binned' : ''), 'data-fk': 'mail:' + e.id, 'aria-label': 'From ' + (e.from.name || e.from.email) + ': ' + e.subject, 'aria-pressed': e.id === selId ? 'true' : 'false', onclick: function () { A.select(e.id); showReading(); } },
             h('span', { class: 'from' }, e.from.name || e.from.email), h('span', { class: 'meta' }, D.fmtDate(e.receivedAt), ' ', pill),
             h('span', { class: 'subj' }, e.subject));
@@ -120,7 +118,7 @@
     var c = st.app.dealt[e.id] ? card(st, st.app.dealt[e.id]) : null;
     var reading = !!st.app.reading[e.id];
     var actions = [];
-    if (reading) actions.push(h('span', { class: 'reading-anim' }, h('i'), h('i'), h('i'), ' The Dealer is reading…'));
+    if (reading) actions.push(h('span', { class: 'reading-anim' }, 'The Dealer is reading...'));
     else if (!c) {
       actions.push(h('button', { class: 'btn primary', onclick: function () { A.dealEmail(e.id); } }, 'Deal this'));
       if (C.isOn()) actions.push(h('button', { class: 'btn', onclick: function () { S.main.readLive(e.id); } }, 'Read with live AI'));
@@ -151,12 +149,10 @@
     var kids = [
       h('div', { class: 'hdr' }, D.monogram(c.company.name), h('div', null, h('h4', null, c.company.name), h('div', { class: 'sub' }, binned ? ('binned: ' + (c.binReason || 'not a pitch')) : industry(c) + ' · ' + sizeText + ' · ' + srcText(st, c))),
         binned ? null : h('div', { class: 'suit' }, (c.sells.category || '').replace(/-/g, ' '))),
+      // The Dealer's one-line note sits under the header on the front; the vocabulary (industries, sizes, roles) is on the back.
+      c.dealerNote ? h('div', { class: 'dealer-note' }, c.dealerNote) : null,
       h('div', { class: 'line' }, h('b', null, 'Sells'), c.sells.summary),
-      binned ? h('div', { class: 'dealer-note' }, c.dealerNote) : h('div', { class: 'line' }, h('b', null, 'Wants to reach'), c.targets.summary || '—'),
-      binned ? null : h('div', { class: 'chips' },
-        c.targets.industries.map(function (i) { return h('span', null, T.INDUSTRY_LABEL[i] || i); }),
-        c.targets.sizeBands.map(function (b) { return h('span', null, b + ' staff'); }),
-        c.targets.roles.slice(0, 3).map(function (r) { return h('span', null, roleChip(r)); })),
+      binned ? null : h('div', { class: 'line' }, h('b', null, 'Wants to reach'), c.targets.summary || '—'),
       h('div', { class: 'conf', 'aria-hidden': 'true' }, h('i', { style: { width: Math.round(c.confidence * 100) + '%' } })),
       h('div', { class: 'foot' }, h('span', null, Math.round(c.confidence * 100) + '% sure · ' + readerShort(c)),
         opts.compact ? statusPill(st, c.id) : h('span', { class: 'row' }, statusPill(st, c.id), h('button', { class: 'btn ghost', 'data-fk': 'flip:' + c.id, 'aria-label': 'Flip the ' + c.company.name + ' card to its original email', onclick: function () { A.toggleFlip(c.id); } }, 'Flip')))
@@ -170,7 +166,10 @@
     var email = A.emailById(src.emailId);
     return h('div', { class: 'card-face back', inert: !!hidden, 'aria-hidden': hidden ? 'true' : null },
       h('div', { class: 'row between' }, h('h4', null, c.company.name), readerPill(c)),
-      h('div', { class: 'dealer-note' }, c.dealerNote || '—'),
+      T.isBinned(c) ? h('div', { class: 'dealer-note' }, c.dealerNote || '—') : h('div', { class: 'chips' },
+        c.targets.industries.map(function (i) { return h('span', null, T.INDUSTRY_LABEL[i] || i); }),
+        c.targets.sizeBands.map(function (b) { return h('span', null, b + ' staff'); }),
+        c.targets.roles.slice(0, 3).map(function (r) { return h('span', null, roleChip(r)); })),
       h('div', { class: 'line' }, h('b', null, (c.sources.length > 1 ? c.sources.length + ' emails · showing the first' : 'The original email') + (email ? ' · ' + email.subject : ''))),
       h('div', { class: 'back-body' }, email ? email.body : '(email not found)'),
       h('div', { class: 'foot' }, h('span', null, 'contact hidden until both sides agree'), h('button', { class: 'btn ghost', 'data-fk': 'flip:' + c.id, onclick: function () { A.toggleFlip(c.id); } }, 'Flip back'))
@@ -217,6 +216,11 @@
   function reasonList(title, p) {
     return h('div', null, h('b', null, title), h('ul', null, p.reasons.map(function (r) { return h('li', { class: r.points < 0 ? 'neg' : '' }, r.text + ' (' + (r.points > 0 ? '+' : '') + r.points + ')'); })));
   }
+  // The reason worth the most points, shown on the row; "Why" still opens every reason.
+  function topReason(st, id, p) {
+    var best = (p && p.reasons || []).slice().sort(function (x, y) { return y.points - x.points; })[0];
+    return best ? h('div', { class: 'top-reason' }, cname(st, id) + ': ' + best.text) : null;
+  }
   function pitchButton(st, fromId, toId) {
     var notJoined = [fromId, toId].filter(function (id) { return !(st.market.companies[id] && st.market.companies[id].status === 'opted_in'); }).map(function (id) { return cname(st, id); });
     var why = notJoined.length ? 'Both must join first: ' + notJoined.join(' and ') + (notJoined.length > 1 ? ' have' : ' has') + ' not joined yet.' : (A.can(fromId) ? '' : notYou(st, fromId, 'send this pitch'));
@@ -225,7 +229,7 @@
   function matches(st) {
     var m = st.market.matches;
     if (!m || !m.live) return h('section', null, head('Matches', 'Who wants to pitch whom, scored both ways.'), emptyBox('No cards yet. Deal the inbox first.'));
-    var f = st.app.matchFilter;
+    var f = st.app.matchFilter || 'hot';
     var mutualKeys = {};
     m.mutual.forEach(function (p) { mutualKeys[p.a + '>' + p.b] = true; mutualKeys[p.b + '>' + p.a] = true; });
     var oneWay = m.pairs.filter(function (p) { return !mutualKeys[p.from + '>' + p.to]; });
@@ -234,7 +238,7 @@
     // Each chip counts the rows it shows (Hot = hot mutual pairs + hot one-way pairs, one row each).
     var hotN = m.mutual.filter(function (p) { return p.score >= M.THRESHOLDS.hot; }).length + oneWay.filter(function (p) { return p.tier === 'hot'; }).length;
     var filters = h('div', { class: 'filters', role: 'group', 'aria-label': 'Show matches' },
-      chip('mutual', 'Want each other ' + m.mutual.length), chip('oneway', 'One-way ' + oneWay.length), chip('hot', 'Hot ' + hotN),
+      chip('hot', 'Hot ' + hotN), chip('mutual', 'Want each other ' + m.mutual.length), chip('oneway', 'One-way ' + oneWay.length),
       chip('cross', 'Across inboxes ' + m.mutual.filter(function (p) { return isCross(p.a, p.b); }).length), chip('all', 'Everything ' + (m.mutual.length + oneWay.length)),
       h('span', { class: 'small muted', style: { marginLeft: 'auto' } }, 'match = ' + m.threshold + '+ of 100 · hot = ' + M.THRESHOLDS.hot + '+'));
 
@@ -242,7 +246,7 @@
       var key = p.a + '+' + p.b, open = st.app.openMatches[key];
       return h('div', { class: 'match' + (open ? ' open' : '') },
         who(st, p.a), h('div', { class: 'arrow mutual', role: 'img', 'aria-label': 'want each other' }, '⇄'), who(st, p.b),
-        h('div', { class: 'score' }, h('div', { class: 'bar' + (p.score < M.THRESHOLDS.hot ? ' warm' : '') }, h('i', { style: { width: p.score + '%' } })), h('span', null, h('b', null, p.ab.score), ' → · ', h('b', null, p.ba.score), ' ← · ', h('span', { class: 'pill ' + (p.score >= M.THRESHOLDS.hot ? 'hot' : 'warm') }, p.score >= M.THRESHOLDS.hot ? 'hot' : 'warm'))),
+        h('div', { class: 'score' }, h('div', { class: 'bar' + (p.score < M.THRESHOLDS.hot ? ' warm' : '') }, h('i', { style: { width: p.score + '%' } })), h('span', null, h('b', null, p.ab.score), ' → · ', h('b', null, p.ba.score), ' ← · ', h('span', { class: 'pill ' + (p.score >= M.THRESHOLDS.hot ? 'hot' : 'warm') }, p.score >= M.THRESHOLDS.hot ? 'hot' : 'warm')), topReason(st, p.a, p.ab), topReason(st, p.b, p.ba)),
         h('div', { class: 'row' }, h('button', { class: 'btn small ghost', 'data-fk': 'why:' + key, 'aria-expanded': open ? 'true' : 'false', onclick: function () { A.toggleMatch(key); } }, open ? 'Hide why' : 'Why'), pitchButton(st, p.a, p.b)),
         h('div', { class: 'reasons' }, reasonList(cname(st, p.a) + ' wants ' + cname(st, p.b) + ' because it', p.ab), reasonList(cname(st, p.b) + ' wants ' + cname(st, p.a) + ' because it', p.ba)));
     }
@@ -251,7 +255,7 @@
       var back = m.byKey[p.to + '>' + p.from];
       return h('div', { class: 'match' + (open ? ' open' : '') },
         who(st, p.from), h('div', { class: 'arrow', role: 'img', 'aria-label': 'wants' }, '→'), who(st, p.to),
-        h('div', { class: 'score' }, h('div', { class: 'bar' + (p.tier !== 'hot' ? ' warm' : '') }, h('i', { style: { width: p.score + '%' } })), h('span', null, h('b', null, p.score), '/100 · ', h('span', { class: 'pill ' + p.tier }, p.tier), back ? ' · back: ' + back.score : '')),
+        h('div', { class: 'score' }, h('div', { class: 'bar' + (p.tier !== 'hot' ? ' warm' : '') }, h('i', { style: { width: p.score + '%' } })), h('span', null, h('b', null, p.score), '/100 · ', h('span', { class: 'pill ' + p.tier }, p.tier), back ? ' · back: ' + back.score : ''), topReason(st, p.from, p)),
         h('div', { class: 'row' }, h('button', { class: 'btn small ghost', 'data-fk': 'why:' + key, 'aria-expanded': open ? 'true' : 'false', onclick: function () { A.toggleMatch(key); } }, open ? 'Hide why' : 'Why'), pitchButton(st, p.from, p.to)),
         h('div', { class: 'reasons' }, reasonList(cname(st, p.from) + ' wants ' + cname(st, p.to) + ' because it', p), back ? reasonList(cname(st, p.to) + ' scores ' + cname(st, p.from) + ' only ' + back.score + ' because it', back) : null));
     }
@@ -287,7 +291,9 @@
 
     // Booths
     sections.push(h('div', { class: 'section' }, h('h3', null, 'Booths', h('span', { class: 'count' }, joined.length + ' joined')),
-      joined.length ? h('div', { class: 'booths' }, joined.map(function (id) { return booth(st, id); })) : h('div', { class: 'note' }, 'Nobody has joined yet. Invite the companies, then join as one of them (or as everyone).')));
+      joined.length ? h('div', { class: 'booths' }, joined.map(function (id) { return booth(st, id); }))
+        : h('div', { class: 'note' }, h('p', null, 'Nobody has joined yet. Invite the companies and join as one of them, or let the Dealer run a sample deal.'),
+          h('button', { class: 'btn primary', onclick: function () { A.sampleDeal(); } }, 'Run a sample deal'))));
 
     // Waiting
     var waiting = invited.concat(dealt);
@@ -322,8 +328,8 @@
   function booth(st, id) {
     var m = st.market, c = card(st, id), rec = m.companies[id], mc = K.matchCounts(m, id), sum = K.summary(m).companies[id] || { cash: 0, credits: 0, paid: 0 };
     var mine = st.app.actor === id;
-    return h('div', { class: 'booth', style: mine ? { borderColor: 'var(--felt)', boxShadow: '0 0 0 2px var(--felt-soft)' } : null },
-      h('div', { class: 'hdr' }, D.monogram(c.company.name), h('div', null, h('div', { style: { fontWeight: 600 } }, c.company.name), h('div', { class: 'small muted' }, srcText(st, c) + (rec.openBooth ? ' · booth open to anyone' : '')))),
+    return h('div', { class: 'booth' + (mine ? ' mine' : '') },
+      h('div', { class: 'hdr' }, D.monogram(c.company.name), h('div', null, h('div', null, h('b', null, c.company.name)), h('div', { class: 'small muted' }, srcText(st, c) + (rec.openBooth ? ' · booth open to anyone' : '')))),
       h('div', { class: 'price' }, money(rec.listenPriceCents), h('small', null, ' / read · ' + money(rec.listenPriceCents * m.config.meetingMultiplier) + ' / meeting')),
       h('div', { class: 'kv' },
         h('span', null, 'Earned'), h('b', null, money(sum.cash) + (rec.creditsCents ? ' + ' + money(rec.creditsCents) + ' credits' : '')),
@@ -345,6 +351,9 @@
       next.push(h('button', { class: 'btn small gold', 'aria-haspopup': 'dialog', disabled: !A.can(o.from), title: A.can(o.from) ? '' : notYou(st, o.from, 'pay'), onclick: function () { modals.checkout(o); } }, 'Pay ' + money(o.priceCents) + (o.kind === 'swap' ? ' + ' + money(o.backPriceCents) : '')));
     } else if (o.status === 'paid') {
       next.push(h('button', { class: 'btn small primary', 'aria-haspopup': 'dialog', disabled: !A.can(o.to), title: A.can(o.to) ? '' : notYou(st, o.to, 'confirm it'), onclick: function () { modals.respond(o); } }, o.kind === 'read' ? 'Answer the pitch' : 'It happened'));
+      next.push(h('button', { class: 'btn small', disabled: !A.can(o.from), title: A.can(o.from) ? 'Return the money if the listener never answers' : 'Only the pitcher can ask for a refund', onclick: function () { A.refund(o.id); } }, 'No answer, refund'));
+    } else if (o.status === 'refunded') {
+      next.push(h('span', { class: 'small' }, 'refunded, money returned'));
     } else if (o.status === 'completed') {
       next.push(h('span', { class: 'small muted' }, o.response && o.response.answer !== 'done' ? 'answered “' + o.response.answer + '”' : 'done · money released'));
     } else if (o.status === 'declined') next.push(h('span', { class: 'small muted' }, 'declined, nothing moved'));
@@ -421,23 +430,34 @@
   }
 
   // ---------------- outbox ----------------
+  // A letter that has just been opened (the story opens the invitation) is brought into view once: the ids open at the
+  // last draw are remembered, so a re-render with the same letters open does not jump again.
+  var lastScrolledMail = null, openAtLastDraw = {};
+  function scrollMail(id) {
+    setTimeout(function () { var el = document.getElementById('mailrow-' + id); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' }); }, 0);
+  }
   function outbox(st) {
     var mails = st.market.outbox.slice().reverse();
     var f = st.app.mailFilter || 'all';
     var types = { all: 'All', invite: 'Invitations', request: 'Pitch requests', intro: 'Introductions', receipt: 'Receipts', statement: 'Statements' };
     var shown = mails.filter(function (x) { return f === 'all' || x.type === f; });
+    var openNow = {};
+    Object.keys(st.app.openMails).forEach(function (id) { if (st.app.openMails[id]) openNow[id] = true; });
     var filters = h('div', { class: 'filters' }, Object.keys(types).map(function (k) {
       var n = k === 'all' ? mails.length : mails.filter(function (x) { return x.type === k; }).length;
       return h('button', { class: 'chip' + (f === k ? ' on' : ''), 'data-fk': 'mailf:' + k, 'aria-pressed': f === k ? 'true' : 'false', onclick: function () { store.commit(function (s) { s.app.mailFilter = k; }); } }, types[k] + ' ' + n);
     }));
-    return h('section', null, head('Outbox', 'Every email the Dealer would have sent. None were sent; this is where they land instead.', h('span', { class: 'pill sim' }, 'nothing sent')),
+    var section = h('section', null, head('Outbox', 'Every email the Dealer would have sent. None were sent; this is where they land instead.', h('span', { class: 'pill sim' }, 'nothing sent')),
       filters,
       shown.length ? h('div', { class: 'mails' }, shown.map(function (x) {
-        var open = st.app.openMails[x.id];
-        return h('div', { class: 'mailrow' + (open ? ' open' : '') },
+        var open = !!st.app.openMails[x.id];
+        if (open && !openAtLastDraw[x.id] && x.id !== lastScrolledMail) { lastScrolledMail = x.id; scrollMail(x.id); }
+        return h('div', { class: 'mailrow' + (open ? ' open' : ''), id: 'mailrow-' + x.id },
           h('button', { id: 'mailbtn-' + x.id, 'data-fk': 'mailrow:' + x.id, 'aria-expanded': open ? 'true' : 'false', 'aria-label': x.type + ': ' + x.subject, onclick: function () { A.toggleMail(x.id); } }, h('span', { class: 'pill ' + (x.type === 'intro' ? 'paid' : x.type === 'statement' ? 'opted_in' : '') }, x.type), h('span', null, h('div', { class: 'subj' }, x.subject), h('div', { class: 'to' }, 'to ' + x.to.map(function (t) { return t.name + (t.email ? ' <' + t.email + '>' : ''); }).join(', '))), h('span', { class: 'small muted' }, D.fmtTime(x.at))),
           h('div', { class: 'body' }, x.body));
       })) : emptyBox(mails.length ? 'None of these yet.' : 'Nothing here yet. Invitations appear when you invite the deck.'));
+    openAtLastDraw = openNow;
+    return section;
   }
 
   // ---------------- reality ----------------
@@ -473,6 +493,16 @@
           testOut),
         h('div', null, h('div', { class: 'field' }, h('label', null, 'What the Dealer is told (system prompt)'), h('pre', { class: 'prompt' }, X.SYSTEM_PROMPT)),
           h('details', null, h('summary', { class: 'small muted' }, 'The JSON schema every card must fit'), h('pre', { class: 'prompt' }, JSON.stringify(X.SCHEMA, null, 2))))));
+    var notBuilt = h('div', { class: 'section' }, h('div', { class: 'uc' }, h('span', null, 'UNDER CONSTRUCTION')), h('h3', null, 'What is not built'),
+      h('ul', { class: 'small' },
+        h('li', null, 'Real payments, payouts, escrow or refunds. SpamPay is a fake checkout.'),
+        h('li', null, 'Real email: nothing is sent, nothing is received, no inbox is connected.'),
+        h('li', null, 'Accounts, sign-in, or a second person. You play every company from one menu.'),
+        h('li', null, 'A server of any kind. The page runs in your browser only.'),
+        h('li', null, 'The 30-day card deletion and the 7-day response window as real timers.'),
+        h('li', null, 'A learned matcher. The matcher is hand-weighted code.'),
+        h('li', null, 'Live reading of a whole inbox at once. Live AI reads one email at a time.'),
+        h('li', null, 'Rejoining after a decline.')));
     var weak = h('div', { class: 'section' }, h('h3', null, 'Honest weak spots'),
       h('ul', { class: 'small' },
         h('li', null, 'Will spammers pay? Reasoned, not measured: they already pay for leads and meetings (one of the cards in this deck sells exactly that). A consented, matched introduction is the thing they buy today, at a lower price than an agency.'),
@@ -483,7 +513,7 @@
         h('li', null, 'The joke can read as mean. The invitation is written to be read by the person it names. Keep it that way.')));
     return h('section', { class: 'reality' }, head('What is real', 'Judges deserve a straight answer. Here it is.'),
       h('div', { class: 'tbl-wrap', style: { marginBottom: '22px' } }, h('table', { class: 'tbl' }, h('tbody', null, rows.map(function (r) { return h('tr', null, h('td', null, r[0]), h('td', null, r[1])); })))),
-      live, weak);
+      live, notBuilt, weak);
   }
 
   // ---------------- modals ----------------

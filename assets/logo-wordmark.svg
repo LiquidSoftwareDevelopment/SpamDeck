@@ -1,15 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 981 256" width="981" height="256" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 350 110" width="350" height="110" role="img" aria-labelledby="title desc">
   <title id="title">SpamDeck</title>
-  <g transform="translate(-5.48 0)">
-    <g transform="translate(95 111.32) rotate(-14)">
-      <rect x="-63.13" y="-87.57" width="126.27" height="175.15" rx="17.31" fill="#fffdf8" stroke="#1c1a16" stroke-width="5.5"/>
-      <text x="-19.35" y="-12.73" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="69.24" font-weight="700" fill="#1c1a16">@</text>
+  <desc id="desc">SpamDeck lockup: the pixel playing card mark beside the red SpamDeck wordmark with its hard black shadow, and the tagline: charge spammers to pitch each other.</desc>
+  <rect width="350" height="110" fill="#FFFFFF"/>
+  <g transform="translate(16 35) scale(2)" shape-rendering="crispEdges">
+    <rect x="1" y="1" width="12" height="18" fill="#FFFFFF"/>
+    <g fill="#000000"><rect x="1" y="0" width="12" height="1"/><rect x="1" y="19" width="12" height="1"/><rect x="0" y="1" width="1" height="18"/><rect x="13" y="1" width="1" height="18"/></g>
+    <g id="ix" fill="#FF0000">
+      <rect x="4" y="2" width="1" height="1"/><rect x="3" y="3" width="4" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="3" y="5" width="3" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="2" y="7" width="4" height="1"/><rect x="4" y="8" width="1" height="1"/>
+      <rect x="3" y="10" width="3" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="6" y="11" width="1" height="1"/><rect x="2" y="12" width="1" height="1"/><rect x="4" y="12" width="3" height="1"/><rect x="2" y="13" width="1" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="6" y="13" width="1" height="1"/><rect x="2" y="14" width="1" height="1"/><rect x="4" y="14" width="3" height="1"/><rect x="2" y="15" width="1" height="1"/><rect x="3" y="16" width="4" height="1"/>
     </g>
-    <g transform="translate(167.3 147.98) rotate(8)">
-      <rect x="-63.13" y="-87.57" width="126.27" height="175.15" rx="17.31" fill="#1f6b47" stroke="#1c1a16" stroke-width="5.5"/>
-      <rect x="-52.95" y="-77.39" width="105.9" height="154.78" rx="11.2" fill="none" stroke="#b9931f" stroke-width="2.29"/>
-      <text x="0" y="34.93" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="109.98" font-weight="700" fill="#fffdf8">$</text>
-    </g>
+    <use xlink:href="#ix" href="#ix" transform="rotate(180 7 10)"/>
   </g>
-  <text class="word" x="260.15" y="179.97" font-family="Georgia, 'Times New Roman', serif" font-size="150" font-weight="400" fill="#1c1a16" textLength="710.89" lengthAdjust="spacingAndGlyphs">SpamDeck</text>
+  <text x="63" y="59" font-family="'Times New Roman',Times,serif" font-weight="bold" font-size="48" fill="#000000">SpamDeck</text>
+  <text x="60" y="56" font-family="'Times New Roman',Times,serif" font-weight="bold" font-size="48" fill="#FF0000">SpamDeck</text>
+  <text x="60" y="88" font-family="'Times New Roman',Times,serif" font-style="italic" font-size="18" fill="#000000">Charge spammers to pitch each other.</text>
 </svg>
