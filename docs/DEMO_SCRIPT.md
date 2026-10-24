@@ -14,12 +14,12 @@ Press **Next** to move on. The table says what to try on each step and what to l
 | 0:05 | 1 · Inbox | Click any email | Three inboxes: yours, Priya's, Hirewire's. Nobody asked for any of it. |
 | 0:15 | 2–3 · Deck | The **Binned** filter; **Flip** on any card | Cards landing one by one, then the tally. The scam and the newsletter, binned. The original email on the back of a card, and "contact hidden until both sides agree". |
 | 0:35 | 4 · Matches | **Why** on Hirewire ⇄ Ledgerly | Every point as a sentence: 80 one way, 55 the other. |
-| 0:55 | 5 · Outbox | Read the open letter | Ledgerly's invitation: what was read, what was not shared, four options, deletion in 30 days. |
-| 1:15 | 6 · Market | Scroll | Eleven booths with their prices. Six companies still waiting. Podly, declined. |
-| 1:25 | 7–9 · Market, Outbox, Ledger | Open the introduction | Hirewire's offer accepted; the introduction with both contact lines; then the split on the Ledger: $37.50, $22.50, $15.00. The story pays its offers directly, so the SpamPay checkout itself appears only when you pay an offer by hand (below). |
+| 0:55 | 5 · Outbox | Read the open letter | The invitation at the top of the outbox: what was read, what was not shared, four options, deletion in 30 days. |
+| 1:15 | 6 · Market | **Join** in the form (you are Ledgerly) | Your booth appears with your price. Next signs up ten more; six companies still waiting; Podly, declined. |
+| 1:25 | 7–9 · Market, Ledger | **Pay $75.00 (simulated)** in SpamPay | Hirewire's offer accepted; the fake checkout, which you press; then the split on the Ledger: $37.50, $22.50, $15.00. The introduction with both contact lines is in the Outbox. |
 | 1:55 | 10–12 · Ledger | Watch the tiles | "Your inbox earned", "Priya's inbox earned" and "Credits outstanding" moving: across the pool, listen to earn, the swap. |
 | 2:15 | 13 · Market | The **Pitches** table | Chatterbox's $500 read to Brightpath, with no match behind it. |
-| 2:25 | 14 · Ledger | **Finish** | $250.00 to your inbox, simulated. |
+| 2:25 | 14 · Ledger | **Finish** | $235.00 to your inbox and $35.00 to Priya's, simulated. |
 | 2:30 | **What is real** tab | Scroll | The straight answer, the Live AI panel with the system prompt and schema, the honest weak spots. |
 | 2:45 | Inbox | **Paste a pitch** | Below. |
 
@@ -75,4 +75,4 @@ The key stays in this tab only. A failed call says why, in plain English. The ap
 - **Open booth** (any booth on the Market tab): anyone may then pitch that company at its price, matched or not. Rivals still may not.
 - **Pay with credits**: after the story, Meridian has $1.88 of credits left. Listen to earn more, then propose a pitch with **Pay with: Credits**.
 - **Matches → One-way**: companies that want someone who does not want them back, with the reverse score beside them.
-- **SpamPay**: on any accepted offer, **Pay** opens the fake checkout. It is the only way to see it; the story pays directly.
+- **SpamPay**: the story opens the fake checkout at step 8 and waits for you to press Pay (Next pays if you do not). Outside the story, **Pay** on any accepted offer opens it too.

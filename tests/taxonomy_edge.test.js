@@ -148,7 +148,7 @@ test('a name that is only spaces counts as no name; names are trimmed', () => {
 test('the demo readings normalise exactly as before (ids, names, categories)', () => {
   const { READINGS } = require('./helpers.js');
   const expected = { e01: 'ledgerly', e02: 'hirewire', e03: 'fortifylabs', e04: 'deskwell', e05: 'chatterbox', e06: 'meridianoutbound', e07: 'nordicbean',
-    e08: 'greenpledge', e09: 'podly', e10: 'stacklinestudio', e11: 'brightpath', e12: 'legal-chambers-intl', e13: 'saasweekly', p01: 'shipshape',
+    e08: 'greenpledge', e09: 'podly', e10: 'stacklinestudio', e11: 'brightpath', e12: 'vance-estates-legal', e13: 'saasweekly', p01: 'shipshape',
     p02: 'boomerangreturns', p03: 'pixelprose', p04: 'salestaxly', h01: 'vettd', h02: 'outreachly', h03: 'hiveandco' };
   for (const [k, id] of Object.entries(expected)) {
     const c = T.normalizeCard(READINGS[k]);

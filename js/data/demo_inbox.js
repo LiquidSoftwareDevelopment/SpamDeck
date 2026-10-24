@@ -85,9 +85,9 @@
     },
     {
       id: 'e12', contributorId: 'you', receivedAt: '2026-10-09',
-      from: { name: 'Barrister Felix Oyelaran', email: 'felix.oyelaran@legal-chambers-intl.example' },
-      subject: 'CONFIDENTIAL: Estate of late client (USD 4.5M)',
-      body: "Dear Friend,\n\nI am Barrister Felix Oyelaran, solicitor to a late client who shares your surname and died without next of kin, leaving USD 4,500,000 in a bank here. I propose to present you as the beneficiary. You will receive 40%.\n\nKindly reply with your full name, address and phone number so we may proceed with the utmost confidentiality.\n\nBarrister Felix Oyelaran"
+      from: { name: 'Gregory Vance', email: 'g.vance@vance-estates-legal.example' },
+      subject: 'CONFIDENTIAL: unclaimed estate of a client who shares your surname (USD 4.5M)',
+      body: "Dear Sir or Madam,\n\nI am Gregory Vance of Vance & Partners, solicitors to a late client who shared your surname and died without next of kin, leaving USD 4,500,000 in a bank here. I propose to present you as the beneficiary. You would receive 40%.\n\nKindly reply with your full name, address and telephone number so we may proceed with the utmost confidentiality.\n\nGregory Vance\nVance & Partners"
     },
     {
       id: 'e13', contributorId: 'you', receivedAt: '2026-10-12',

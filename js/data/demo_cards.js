@@ -103,10 +103,10 @@
     },
     e12: {
       isPitch: false, binReason: 'scam',
-      company: { name: 'Barrister Felix Oyelaran', domain: 'legal-chambers-intl.example', contact: { name: 'Felix Oyelaran', title: 'Barrister', email: 'felix.oyelaran@legal-chambers-intl.example' } },
-      sells: { summary: 'Nothing. An advance-fee fraud.', category: 'fraud', tags: [] },
+      company: { name: 'Gregory Vance', domain: 'vance-estates-legal.example', contact: { name: 'Gregory Vance', title: '', email: 'g.vance@vance-estates-legal.example' } },
+      sells: { summary: 'Nothing. An advance-fee fraud dressed as an estate.', category: 'fraud', tags: [] },
       confidence: 0.99,
-      dealerNote: 'Not a company. Not a pitch. Just crime. Binned.'
+      dealerNote: 'Not a company. Not a pitch. Just crime in a nice suit. Binned.'
     },
     e13: {
       isPitch: false, binReason: 'newsletter',

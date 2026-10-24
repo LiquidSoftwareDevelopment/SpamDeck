@@ -177,6 +177,25 @@
       });
     },
 
+    // The click-around shortcut on the Market screen: invite everyone, join the best mutual pair, propose and accept,
+    // and stop before payment so the person meets the SpamPay checkout themselves.
+    sampleDeal: function () {
+      return store.commit(function (st) {
+        var m = st.market;
+        if (!Object.keys(m.cards).length) throw new Error('Deal the inbox first.');
+        K.invite(m);
+        var pair = (m.matches.mutual || []).filter(function (p) { return m.companies[p.a] && m.companies[p.b] && m.companies[p.a].status !== 'declined' && m.companies[p.b].status !== 'declined'; })[0];
+        if (!pair) throw new Error('No two companies want each other yet.');
+        [pair.a, pair.b].forEach(function (id) { if (m.companies[id].status === 'invited') K.optIn(m, id); });
+        var from = pair.ab.score >= pair.ba.score ? pair.a : pair.b, to = from === pair.a ? pair.b : pair.a;
+        var o = K.propose(m, { from: from, to: to, kind: 'read' });
+        K.acceptOffer(m, o.id);
+        K.say(m, K.name(m, to) + ' accepted ' + K.name(m, from) + '\u2019s offer. Press Pay to see the fake checkout; then answer the pitch as ' + K.name(m, to) + ' and watch the money split.');
+        st.app.tab = 'market';
+        return o;
+      });
+    },
+
     // Who may press which button. "everyone" is demo mode: all buttons live.
     can: function (companyId) {
       var a = store.state.app.actor;

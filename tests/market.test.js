@@ -22,7 +22,7 @@ test('dealing registers 18 live companies; binned cards get no market record', (
   assert.equal(st.companies.ledgerly.status, 'dealt');
   assert.equal(st.companies.ledgerly.contributorId, 'you');
   assert.equal(st.companies.vettd.contributorId, 'hirewire');
-  assert.ok(!st.companies['legal-chambers-intl']);
+  assert.ok(!st.companies['vance-estates-legal']);
 });
 
 test('invite sends one disclosure letter per company and says what was not shared', () => {

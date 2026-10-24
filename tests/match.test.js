@@ -32,9 +32,9 @@ test('a pitch to everyone is not a match with anyone in particular', () => {
 
 test('binned cards are never matched', () => {
   assert.equal(res.live, 18);
-  assert.ok(!res.byCompany['legal-chambers-intl']);
+  assert.ok(!res.byCompany['vance-estates-legal']);
   assert.ok(!res.byCompany['saasweekly']);
-  assert.ok(!Object.keys(res.byKey).some((k) => k.includes('saasweekly') || k.includes('legal-chambers')));
+  assert.ok(!Object.keys(res.byKey).some((k) => k.includes('saasweekly') || k.includes('vance-estates')));
 });
 
 test('no company is matched with itself and wants/wantedBy are two views of the same pairs', () => {

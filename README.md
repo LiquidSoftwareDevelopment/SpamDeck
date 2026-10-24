@@ -21,9 +21,9 @@ Press **Play the story**: fourteen steps narrated by the Dealer (`js/app/tour.js
 3. **Dealt, binned, merged.** 18 companies dealt. A newsletter and a scam binned. Hirewire's two emails and Deskwell's two become one card each.
 4. **The matches.** 21 pairs want each other. The desk maker, the coffee roaster and the outbound agency are each other's best matches.
 5. **The letter.** All 18 get the same invitation: what was read, what was not shared, and deletion in 30 days if they do nothing.
-6. **Who said yes.** 11 join and price their attention. Meridian asks for credits. Brightpath opens its booth to anyone at $500. Podly declines, and that is the end of Podly.
+6. **Who said yes.** You are Ledgerly now: the join form opens and you name your price. Next signs up ten more (Meridian asks for credits, Brightpath opens its booth to anyone at $500); Podly declines, and that is the end of Podly.
 7. **Pay to pitch.** Hirewire scores Ledgerly 80 out of 100 and offers Ledgerly's price, $75, for a read. Ledgerly accepts.
-8. **The fake checkout.** SpamPay holds the $75 (pay any offer by hand to see the checkout itself). The introduction goes out: the first time either side sees the other's address.
+8. **The fake checkout.** SpamPay opens and you press the fake Pay button. The $75 is held, and the introduction goes out: the first time either side sees the other's address.
 9. **Get paid to listen.** Ledgerly answers "interested": $37.50 to Ledgerly, $22.50 to you for supplying both sides, $15.00 to SpamDeck.
 10. **Across the pool.** Chatterbox (your inbox) pays $100 to pitch Boomerang Returns (Priya's). Priya earns $20, you $10.
 11. **Listen to earn.** Meridian reads Outreachly's pitch for $46.88 in credits instead of $37.50 in cash, then spends $45 of them pitching Deskwell.
