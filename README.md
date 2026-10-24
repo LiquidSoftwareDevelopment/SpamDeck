@@ -2,7 +2,7 @@
 
 <p align="center"><img src="assets/doves.gif" width="360" alt="Two doves flying on rainbow trails: one carries cash, the other a letter marked @"></p>
 
-<p align="center"><img src="assets/spamdeck-tour.gif" width="800" alt="SpamDeck, animated: the story stepping through inbox, deck, matches, market and ledger"></p>
+<p align="center"><img src="assets/spamdeck-tour.gif" width="640" alt="SpamDeck, animated: the story stepping through inbox, deck, matches, market and ledger"></p>
 
 # Charge spammers to pitch each other.
 
