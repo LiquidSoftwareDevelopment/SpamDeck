@@ -411,3 +411,6 @@ body.still .ad-frame.f1 { opacity: 1; }
 
 /* the doves: cash one way, mail the other, rainbows behind */
 .doves { display: block; margin: 4px auto 0; image-rendering: pixelated; max-width: 90vw; height: auto; }
+
+/* white doves vanish on the light page: give them a navy sky in a bevelled frame, like a 1995 image */
+.doves { background: #000080; border: 3px outset #c0c0c0; padding: 2px; }
