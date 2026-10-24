@@ -414,3 +414,6 @@ body.still .ad-frame.f1 { opacity: 1; }
 
 /* white doves vanish on the light page: give them a navy sky in a bevelled frame, like a 1995 image */
 .doves { background: #000080; border: 3px outset #c0c0c0; padding: 2px; }
+
+/* masthead logo at 80% of its first size, on his word 2026-10-24 */
+.brand-logo { width: 240px; }
