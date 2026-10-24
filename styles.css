@@ -397,3 +397,6 @@ body.still .ad-frame.f1 { opacity: 1; }
 /* the logo Michael supplied, framed like a 1995 image */
 .brand-logo { display: block; width: 300px; height: auto; max-width: 70vw; background: #fff; border: 3px outset #d0d0d0; padding: 4px 10px; }
 .brand { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; }
+
+/* the billboard count lost its spaces in a flex row; give it margins instead */
+#ad-count { margin: 0 .3em; }
