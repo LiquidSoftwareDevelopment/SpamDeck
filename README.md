@@ -1,4 +1,4 @@
-![SpamDeck](assets/banner.svg)
+![SpamDeck](assets/banner.png)
 
 # Charge spammers to pitch each other.
 
