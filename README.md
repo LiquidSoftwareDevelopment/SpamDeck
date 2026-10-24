@@ -2,6 +2,8 @@
 
 <p align="center"><img src="assets/doves.gif" width="360" alt="Two doves flying on rainbow trails: one carries cash, the other a letter marked @"></p>
 
+<p align="center"><img src="assets/spamdeck-tour.gif" width="800" alt="SpamDeck, animated: the story stepping through inbox, deck, matches, market and ledger"></p>
+
 # Charge spammers to pitch each other.
 
 You receive sales pitches you never asked for, and a company pitching you is often exactly the customer another company pitching you is looking for. SpamDeck's AI, the Dealer, reads each pitch, works out what the company sells and whom it wants to reach, and finds the companies that want each other. They opt in, pay to pitch each other, and the inboxes that supplied them take a cut: nothing is sold without consent, and no contact details change hands until both sides agree and the pitcher has paid.
